@@ -91,6 +91,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .buffet-tile-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .buffet-tile span { display: flex; min-height: 39px; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 4px; background: #fcfaf6; color: #594942; font-size: 10px; font-weight: 700; transition: border-color .18s ease, background .18s ease; }
 .buffet-tile span::before { width: 12px; height: 12px; flex: 0 0 auto; border: 1px solid #c6b6a4; border-radius: 2px; background: white; content: ""; }
+.buffet-tile span small { margin-left: auto; color: #8b6046; font-size: 8px; font-weight: 800; white-space: nowrap; }
 .buffet-tile input:checked + span::before { border-color: var(--red); background: var(--red); box-shadow: inset 0 0 0 3px #fff; }
 .buffet-tile input:disabled + span { opacity: .43; cursor: not-allowed; }
 .buffet-submit { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-top: 16px; border-top: 1px solid var(--line); }

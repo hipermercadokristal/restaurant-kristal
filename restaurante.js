@@ -618,7 +618,10 @@ async function loadMenu() {
 }
 
 function getBuffetPrice() {
-  return Number(buffetForm.querySelector('input[name="buffet-size"]:checked').dataset.price);
+  const basePrice = Number(buffetForm.querySelector('input[name="buffet-size"]:checked').dataset.price);
+  const extrasPrice = [...buffetForm.querySelectorAll('input[name="buffet-extra"]:checked')]
+    .reduce((total, input) => total + Number(input.dataset.price), 0);
+  return basePrice + extrasPrice;
 }
 
 function updateBuffetPrice() {
@@ -738,14 +741,13 @@ orderDialog.addEventListener("click", (event) => {
 fulfillmentMethod.addEventListener("change", updateDeliveryFields);
 
 buffetForm.addEventListener("change", (event) => {
-  if (event.target.matches('input[name="buffet-size"], input[name="buffet-protein"]')) updateBuffetPrice();
+  if (event.target.matches('input[name="buffet-size"], input[name="buffet-protein"], input[name="buffet-extra"]')) updateBuffetPrice();
 });
 
 buffetForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const base = buffetForm.querySelector('input[name="buffet-base"]:checked');
   const proteins = [...buffetForm.querySelectorAll('input[name="buffet-protein"]:checked')].map((input) => input.value);
-  const extras = [...buffetForm.querySelectorAll('input[name="buffet-extra"]:checked')].map((input) => input.value);
   const size = buffetForm.querySelector('input[name="buffet-size"]:checked').value;
   const proteinLimit = size === "Pequeño" ? 1 : size === "Mediano" ? 2 : 3;
   if (!base || proteins.length === 0 || proteins.length > proteinLimit) {
@@ -755,7 +757,9 @@ buffetForm.addEventListener("submit", (event) => {
     return;
   }
   buffetSequence += 1;
-  const detail = [base.value, ...proteins, ...extras].join(" · ");
+  const pricedExtras = [...buffetForm.querySelectorAll('input[name="buffet-extra"]:checked')]
+    .map((input) => `${input.value} (+${formatUSD(Number(input.dataset.price))})`);
+  const detail = [base.value, ...proteins, ...pricedExtras].join(" · ");
   const key = `buffet:${Date.now()}:${buffetSequence}`;
   cart.set(key, {
     key,
