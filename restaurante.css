@@ -228,7 +228,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .payment-dialog-header h2 { margin: 7px 0 0; color: var(--red-dark); font: 800 25px/1.1 "Manrope", sans-serif; letter-spacing: -.6px; }
 .payment-dialog-content { overflow: auto; padding: 18px 24px 24px; overscroll-behavior: contain; }
 .payment-dialog-intro { margin: 0 0 15px; color: var(--muted); font-size: 11px; line-height: 1.6; }
-.payment-success-message { margin: 0 0 14px; padding: 11px 13px; border: 1px solid #c9ddcb; border-radius: 4px; background: #edf6ed; color: #315d3d; font-size: 10px; font-weight: 700; line-height: 1.5; }
+.payment-success-message { margin: 0 0 14px; padding: 11px 13px; border: 1px solid #a9c5ae; border-left: 4px solid var(--green); border-radius: 4px; background: #edf6ed; color: #315d3d; font-size: 10px; font-weight: 600; line-height: 1.6; }
+.payment-success-message strong { display: inline-block; margin-top: 5px; color: var(--red-dark); font-weight: 800; }
 .payment-bank-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .payment-bank-card { display: grid; min-width: 0; min-height: 98px; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr auto; align-items: center; gap: 7px 8px; padding: 10px; border: 1px solid var(--line); border-radius: 5px; background: #fffdf9; color: #332b27; text-align: left; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
 .payment-bank-card:hover { transform: translateY(-2px); border-color: #d3b576; box-shadow: 0 7px 20px #37161612; }

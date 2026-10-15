@@ -686,13 +686,23 @@ function openOrderDialog() {
   orderDialog.showModal();
 }
 
-function openPaymentDialog(successMessage = "") {
+function setPaymentNotice(message, emphasis = "") {
+  const notice = document.querySelector("#payment-success-message");
+  notice.replaceChildren(document.createTextNode(message));
+  if (emphasis) {
+    notice.append(document.createElement("br"));
+    const highlighted = document.createElement("strong");
+    highlighted.textContent = emphasis;
+    notice.append(highlighted);
+  }
+  notice.hidden = !message && !emphasis;
+}
+
+function openPaymentDialog(successMessage = "", paymentReminder = "") {
   paymentBankList.hidden = false;
   paymentBankDetail.hidden = true;
   paymentContinueButton.hidden = !pendingWhatsappUrl;
-  const successNotice = document.querySelector("#payment-success-message");
-  successNotice.textContent = successMessage;
-  successNotice.hidden = !successMessage;
+  setPaymentNotice(successMessage, paymentReminder);
   paymentDialog.showModal();
 }
 
@@ -737,8 +747,10 @@ paymentContinueButton.addEventListener("click", () => {
   newWindow.opener = null;
   pendingWhatsappUrl = "";
   paymentContinueButton.hidden = true;
-  const successNotice = document.querySelector("#payment-success-message");
-  successNotice.textContent = "WhatsApp se abrió en otra pestaña. Envía el pedido y luego vuelve aquí para copiar los datos de Pago Móvil.";
+  setPaymentNotice(
+    "WhatsApp se abrió en otra pestaña. Cuando la tienda confirme tu pedido, vuelve aquí para completar el Pago Móvil.",
+    "No realices el pago hasta recibir la confirmación de la tienda.",
+  );
 });
 
 async function writePaymentClipboard(value) {
@@ -950,7 +962,10 @@ customerForm.addEventListener("submit", (event) => {
   const message = buildWhatsAppMessage(new FormData(customerForm));
   pendingWhatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   orderDialog.close();
-  openPaymentDialog("Tu pedido está listo. Elige tu banco y copia los datos y el monto; después pulsa «Continuar a WhatsApp». Cuando envíes el pedido, vuelve a esta pestaña para completar el pago.");
+  openPaymentDialog(
+    "Tu pedido está casi listo. Elige tu banco y copia los datos y el monto; después pulsa «Continuar a WhatsApp».",
+    "Importante: espera la confirmación de la tienda sobre la disponibilidad y el monto final antes de realizar el pago.",
+  );
 });
 
 document.querySelector("#rate-refresh").addEventListener("click", loadExchangeRate);
