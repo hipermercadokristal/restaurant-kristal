@@ -19,7 +19,7 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 body { min-width: 320px; margin: 0; padding-bottom: 98px; }
-body:has(.order-dialog[open]) { overflow: hidden; }
+body:has(.order-dialog[open]), body:has(.payment-dialog[open]) { overflow: hidden; }
 a { color: inherit; }
 button, input, select, textarea { font: inherit; }
 button { cursor: pointer; }
@@ -36,6 +36,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .header-actions a { font-size: 11px; font-weight: 800; text-decoration: none; }
 .header-menu-link:hover, .restaurant-footer a:hover { color: var(--red); }
 .restaurant-header .admin-link { padding: 9px 13px; border: 1px solid var(--line); border-radius: 5px; }
+.payment-open-button { display: inline-flex; min-height: 38px; align-items: center; gap: 8px; padding: 4px 11px 4px 6px; border: 1px solid #d7e8e5; border-radius: 6px; background: #f6fbfa; color: #264b49; font-size: 10px; font-weight: 800; transition: border-color .18s ease, background .18s ease, transform .18s ease; }
+.payment-open-button:hover { transform: translateY(-1px); border-color: #91c9c1; background: #eaf7f5; }
+.payment-open-button svg { width: 35px; height: 31px; flex: 0 0 auto; }
 .rate-chip { display: flex; min-height: 35px; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid #e8ded1; border-radius: 5px; background: var(--white); color: #4b4039; font-size: 10px; font-weight: 700; }
 .rate-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: #63916a; box-shadow: 0 0 0 3px #63916a1f; }
 .rate-chip.rate-stale .rate-dot { background: #be8e3e; box-shadow: 0 0 0 3px #be8e3e1f; }
@@ -154,6 +157,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .order-callout > a span { font-size: 16px; }
 .restaurant-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 22px; padding: 22px max(28px, calc((100% - 1160px) / 2)); background: #281417; color: #dbcac0; font-size: 9px; }
 .restaurant-footer a { color: #e4c472; font-size: 9px; font-weight: 700; text-decoration: none; }
+.footer-payment-link { padding: 0; border: 0; background: transparent; color: #e4c472; font-size: 9px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 .footer-brand { display: inline-flex; align-items: center; gap: 8px; color: #fff4e8 !important; }
 .footer-brand img { width: 28px; height: 28px; object-fit: contain; }
 .cart-bar { position: fixed; z-index: 6; right: 0; bottom: 0; left: 0; display: flex; min-height: 78px; align-items: center; justify-content: space-between; gap: 22px; padding: 11px max(28px, calc((100% - 1160px) / 2)); border-top: 1px solid #e4d8c7; background: #fffdf9f5; box-shadow: 0 -8px 34px #2f17130d; backdrop-filter: blur(15px); transition: transform .25s ease; }
@@ -214,29 +218,42 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .customer-form input::placeholder, .customer-form textarea::placeholder { color: #9a8c80; }
 .optional-label { color: var(--muted); font-weight: 500; }
 .form-hint { margin: -3px 0 0; color: var(--muted); font-size: 8px; line-height: 1.55; }
-.payment-method { min-width: 0; margin: 0; padding: 0; border: 0; }
-.payment-method legend { margin-bottom: 8px; color: #58493f; font-size: 9px; font-weight: 800; }
-.payment-bank-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-.payment-bank-option { position: relative; display: block !important; cursor: pointer; }
-.payment-bank-option input { position: absolute; width: 1px; height: 1px; min-height: 1px; margin: 0; padding: 0; border: 0; background: transparent; opacity: 0; }
-.bank-card { display: flex; min-height: 66px; align-items: center; gap: 8px; padding: 8px; border: 1px solid #ddd1c3; border-radius: 4px; background: #fffdf9; color: #3e3934; transition: border-color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease; }
-.payment-bank-option:hover .bank-card { transform: translateY(-1px); border-color: #c7ad89; }
-.payment-bank-option input:checked + .bank-card { border-color: var(--red); background: #fbf2e7; box-shadow: 0 0 0 1px var(--red); }
-.payment-bank-option input:focus-visible + .bank-card { outline: 3px solid #dcb45f99; outline-offset: 2px; }
-.bank-card strong { font-size: 9px; line-height: 1.25; }
-.bank-mark { display: grid; width: 31px; height: 31px; flex: 0 0 31px; place-items: center; border-radius: 6px; color: #fff; font: 800 16px/1 "Manrope", sans-serif; box-shadow: inset 0 0 0 1px #ffffff36; }
-.bank-venezuela .bank-mark { border-radius: 50%; background: #d52b35; }
-.bank-provincial .bank-mark { background: #1765a5; }
-.bank-banesco .bank-mark { border-radius: 50% 50% 6px 50%; background: #ee7c24; }
-.bank-mercantil .bank-mark { background: #1a5592; }
-.payment-details { display: grid; gap: 10px; padding: 13px; border: 1px solid #d7c7a7; border-radius: 4px; background: linear-gradient(120deg, #fbf5e9, #fffdf9); animation: line-in .2s ease both; }
-.payment-details-heading { display: flex; align-items: center; gap: 8px; color: var(--red-dark); font-size: 10px; }
-.payment-check { display: grid; width: 21px; height: 21px; flex: 0 0 21px; place-items: center; border-radius: 50%; background: #e9f1e7; color: #3f754c; font-size: 12px; font-weight: 800; }
+.payment-dialog { position: fixed; inset: 0; width: min(510px, calc(100% - 30px)); max-width: 100%; max-height: min(680px, calc(100dvh - 30px)); margin: auto; padding: 0; overflow: visible; border: 0; border-radius: 9px; background: transparent; color: var(--ink); }
+.payment-dialog::backdrop { background: #171112a8; backdrop-filter: blur(7px); }
+.payment-dialog[open] { animation: payment-backdrop-in .2s ease both; }
+@keyframes payment-backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+.payment-panel { display: flex; max-height: min(680px, calc(100dvh - 30px)); flex-direction: column; overflow: hidden; border: 1px solid #fff8; border-radius: 9px; background: var(--paper); box-shadow: 0 24px 90px #12080970; animation: payment-panel-in .24s cubic-bezier(.2,.75,.25,1) both; }
+@keyframes payment-panel-in { from { transform: translateY(12px) scale(.98); opacity: .6; } to { transform: translateY(0) scale(1); opacity: 1; } }
+.payment-dialog-header { display: flex; min-height: 94px; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid var(--line); background: #fffdf9; }
+.payment-dialog-header h2 { margin: 7px 0 0; color: var(--red-dark); font: 800 25px/1.1 "Manrope", sans-serif; letter-spacing: -.6px; }
+.payment-dialog-content { overflow: auto; padding: 18px 24px 24px; overscroll-behavior: contain; }
+.payment-dialog-intro { margin: 0 0 15px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.payment-bank-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.payment-bank-card { display: flex; min-width: 0; min-height: 82px; align-items: center; justify-content: space-between; gap: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 5px; background: #fffdf9; color: #332b27; text-align: left; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.payment-bank-card:hover { transform: translateY(-2px); border-color: #d3b576; box-shadow: 0 7px 20px #37161612; }
+.payment-bank-logo { display: flex; min-width: 0; align-items: center; gap: 10px; }
+.payment-bank-logo strong { font: 800 11px/1.25 "Manrope", sans-serif; }
+.bank-mark { display: grid; width: 42px; height: 42px; flex: 0 0 42px; place-items: center; border-radius: 7px; color: #fff; font: 800 12px/1 "Manrope", sans-serif; letter-spacing: -.4px; }
+.bank-venezuela .bank-mark { border-radius: 50%; background: #c92736; }
+.bank-provincial .bank-mark { background: #07539f; font-size: 10px; letter-spacing: -1px; }
+.bank-banesco .bank-mark { border-radius: 50% 50% 6px 50%; background: #ee7b24; font-size: 21px; }
+.bank-mercantil .bank-mark { background: #154d8d; font-size: 22px; }
+.bank-card-arrow { color: #a0783d; font-size: 19px; transition: transform .18s ease; }
+.payment-bank-card:hover .bank-card-arrow { transform: translateX(3px); }
+.payment-back-button { display: inline-flex; min-height: 34px; align-items: center; gap: 7px; margin-bottom: 15px; padding: 0 10px; border: 1px solid var(--line); border-radius: 4px; background: #fffdf9; color: var(--red-dark); font-size: 10px; font-weight: 800; }
+.payment-back-button span { font-size: 15px; }
+.payment-detail-card { display: grid; justify-items: center; gap: 11px; padding: 24px 18px; border: 1px solid #e5dac9; border-radius: 6px; background: linear-gradient(145deg, #fffdf9, #f5ecdd); text-align: center; animation: line-in .2s ease both; }
+.payment-detail-brand { display: grid; width: 58px; height: 58px; place-items: center; border-radius: 12px; background: #fff; box-shadow: 0 3px 14px #37161612; }
+.payment-detail-brand .bank-mark { width: 48px; height: 48px; }
+.payment-detail-card h3 { margin: 0; color: var(--red-dark); font: 800 19px "Manrope", sans-serif; }
+.payment-detail-card > p { margin: -4px 0 2px; color: var(--muted); font-size: 10px; }
 .payment-data { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; }
 .payment-data div { display: grid; gap: 4px; padding: 9px; border: 1px solid #eee4d5; border-radius: 3px; background: #fffdf9; }
 .payment-data dt { color: var(--muted); font-size: 8px; }
 .payment-data dd { margin: 0; color: #33251f; font: 800 13px "Manrope", sans-serif; letter-spacing: .2px; }
-.payment-hint { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.5; }
+.payment-detail-card .payment-data { width: min(100%, 350px); }
+.payment-detail-card small { max-width: 310px; color: var(--muted); font-size: 8px; line-height: 1.5; }
+.footer-payment-link:focus-visible, .payment-open-button:focus-visible, .payment-bank-card:focus-visible, .payment-back-button:focus-visible { outline: 3px solid #dcb45f99; outline-offset: 2px; }
 .whatsapp-submit { display: flex; min-height: 47px; align-items: center; justify-content: center; gap: 16px; border: 0; border-radius: 3px; background: #28724d; color: #fff; font-size: 10px; font-weight: 800; transition: background .2s ease, transform .2s ease; }
 .whatsapp-submit:not(:disabled):hover { transform: translateY(-1px); background: #1f603f; }
 .whatsapp-submit span { color: #c9e1aa; font-size: 15px; }
@@ -354,9 +371,17 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .customer-form { gap: 11px; }
   .customer-fields { gap: 8px; }
   .customer-form input, .customer-form select { min-height: 37px; }
-  .payment-bank-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .bank-card { min-height: 58px; }
   .payment-data dd { font-size: 11px; }
+  .payment-dialog { width: min(440px, calc(100% - 22px)); max-height: calc(100dvh - 22px); }
+  .payment-panel { max-height: calc(100dvh - 22px); }
+  .payment-dialog-header { min-height: 79px; padding: 15px 16px; }
+  .payment-dialog-header h2 { font-size: 21px; }
+  .payment-dialog-content { padding: 14px 15px 17px; }
+  .payment-bank-grid { gap: 8px; }
+  .payment-bank-card { min-height: 69px; gap: 5px; padding: 8px; }
+  .payment-bank-logo { gap: 7px; }
+  .payment-bank-logo strong { font-size: 9px; }
+  .bank-mark { width: 35px; height: 35px; flex-basis: 35px; }
   .toast { right: 11px; bottom: 80px; max-width: calc(100% - 22px); }
 }
 @media (max-width: 365px) {

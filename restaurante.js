@@ -14,17 +14,18 @@ const proteinHint = document.querySelector("#protein-hint");
 const exchangeRateLabel = document.querySelector("#exchange-rate");
 const cartBar = document.querySelector("#cart-bar");
 const orderDialog = document.querySelector("#order-dialog");
+const paymentDialog = document.querySelector("#payment-dialog");
+const paymentBankList = document.querySelector("#payment-bank-list");
+const paymentBankDetail = document.querySelector("#payment-bank-detail");
+const paymentDetailBrand = document.querySelector("#payment-detail-brand");
+const paymentDetailBank = document.querySelector("#payment-detail-bank");
 const orderLines = document.querySelector("#order-lines");
 const customerForm = document.querySelector("#customer-form");
 const fulfillmentMethod = document.querySelector("#fulfillment-method");
 const deliveryAddressRow = document.querySelector("#delivery-address-row");
 const deliveryAddress = document.querySelector("#delivery-address");
-const paymentDetails = document.querySelector("#payment-details");
-const paymentSelectedBank = document.querySelector("#payment-selected-bank");
 const whatsappSubmit = document.querySelector("#whatsapp-submit");
 const WHATSAPP_NUMBER = "584128867088";
-const PAYMENT_MOBILE_PHONE = "04245104430";
-const PAYMENT_MOBILE_ID = "26199919";
 const EXCHANGE_RATE_URL = "https://ve.dolarapi.com/v1/dolares/oficial";
 const CART_STORAGE_KEY = "restaurant-kristal-cart-v2";
 const RATE_STORAGE_KEY = "restaurant-kristal-bcv-rate";
@@ -654,10 +655,30 @@ function openOrderDialog() {
   orderDialog.showModal();
 }
 
-customerForm.addEventListener("change", (event) => {
-  if (event.target.name !== "payment-bank") return;
-  paymentSelectedBank.textContent = event.target.value;
-  paymentDetails.hidden = false;
+function openPaymentDialog() {
+  paymentBankList.hidden = false;
+  paymentBankDetail.hidden = true;
+  paymentDialog.showModal();
+}
+
+document.querySelector("#payment-open").addEventListener("click", openPaymentDialog);
+document.querySelector("#footer-payment-open").addEventListener("click", openPaymentDialog);
+document.querySelector("#payment-close").addEventListener("click", () => paymentDialog.close());
+document.querySelector("#payment-back").addEventListener("click", () => {
+  paymentBankDetail.hidden = true;
+  paymentBankList.hidden = false;
+});
+paymentDialog.addEventListener("click", (event) => {
+  if (event.target === paymentDialog) paymentDialog.close();
+});
+paymentBankList.addEventListener("click", (event) => {
+  const bankButton = event.target.closest("[data-payment-bank]");
+  if (!bankButton) return;
+  const bankMark = bankButton.querySelector(".bank-mark").cloneNode(true);
+  paymentDetailBrand.replaceChildren(bankMark);
+  paymentDetailBank.textContent = bankButton.dataset.paymentBank;
+  paymentBankList.hidden = true;
+  paymentBankDetail.hidden = false;
 });
 
 function buildWhatsAppMessage(formData) {
@@ -681,9 +702,6 @@ function buildWhatsAppMessage(formData) {
     `Nombre: ${formData.get("customer-name")}`,
     `Teléfono: ${formData.get("customer-phone")}`,
     `Entrega: ${delivery}`,
-    `Pago Móvil: ${formData.get("payment-bank")}`,
-    `Teléfono Pago Móvil: ${PAYMENT_MOBILE_PHONE}`,
-    `Cédula / RIF Pago Móvil: ${PAYMENT_MOBILE_ID}`,
   ];
   if (delivery === "Delivery") values.push(`Dirección: ${formData.get("address")}`);
   const notes = String(formData.get("notes") || "").trim();
