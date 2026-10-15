@@ -259,9 +259,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .payment-copy-button { display: inline-flex; min-height: 42px; min-width: min(100%, 350px); align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 4px; background: var(--red); color: #fff; font-size: 10px; font-weight: 800; transition: background .18s ease, transform .18s ease; }
 .payment-copy-button::before { content: "▢"; color: #f0d38d; font-size: 15px; }
 .payment-copy-button:hover { transform: translateY(-1px); background: var(--red-dark); }
+.payment-continue-button { display: inline-flex; min-height: 42px; min-width: min(100%, 350px); align-items: center; justify-content: center; gap: 10px; border: 1px solid #256b48; border-radius: 4px; background: #28724d; color: #fff; font-size: 10px; font-weight: 800; transition: background .18s ease, transform .18s ease; }
+.payment-continue-button:hover { transform: translateY(-1px); background: #1f603f; }
+.payment-continue-button span { color: #d6e9ad; font-size: 15px; }
 .payment-copy-status { margin: -3px 0 0; padding: 6px 12px; border-radius: 20px; background: #e9f3e9; color: #326444; font-size: 9px; font-weight: 800; animation: line-in .16s ease both; }
 .payment-detail-card small { max-width: 310px; color: var(--muted); font-size: 8px; line-height: 1.5; }
-.footer-payment-link:focus-visible, .payment-open-button:focus-visible, .payment-bank-card:focus-visible, .payment-back-button:focus-visible, .payment-copy-field:focus-visible, .payment-copy-button:focus-visible { outline: 3px solid #dcb45f99; outline-offset: 2px; }
+.footer-payment-link:focus-visible, .payment-open-button:focus-visible, .payment-bank-card:focus-visible, .payment-back-button:focus-visible, .payment-copy-field:focus-visible, .payment-copy-button:focus-visible, .payment-continue-button:focus-visible { outline: 3px solid #dcb45f99; outline-offset: 2px; }
 .whatsapp-submit { display: flex; min-height: 47px; align-items: center; justify-content: center; gap: 16px; border: 0; border-radius: 3px; background: #28724d; color: #fff; font-size: 10px; font-weight: 800; transition: background .2s ease, transform .2s ease; }
 .whatsapp-submit:not(:disabled):hover { transform: translateY(-1px); background: #1f603f; }
 .whatsapp-submit span { color: #c9e1aa; font-size: 15px; }

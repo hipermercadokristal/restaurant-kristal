@@ -20,6 +20,7 @@ const paymentBankDetail = document.querySelector("#payment-bank-detail");
 const paymentDetailBank = document.querySelector("#payment-detail-bank");
 const paymentDetailLogo = document.querySelector("#payment-detail-logo");
 const paymentCopyStatus = document.querySelector("#payment-copy-status");
+const paymentContinueButton = document.querySelector("#payment-continue-whatsapp");
 const orderLines = document.querySelector("#order-lines");
 const customerForm = document.querySelector("#customer-form");
 const fulfillmentMethod = document.querySelector("#fulfillment-method");
@@ -31,6 +32,7 @@ const EXCHANGE_RATE_URL = "https://ve.dolarapi.com/v1/dolares/oficial";
 const CART_STORAGE_KEY = "restaurant-kristal-cart-v2";
 const RATE_STORAGE_KEY = "restaurant-kristal-bcv-rate";
 let paymentCopyTimeout;
+let pendingWhatsappUrl = "";
 const usdNumber = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const vesNumber = new Intl.NumberFormat("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const menuCategories = [
@@ -676,6 +678,7 @@ function openOrderDialog() {
 function openPaymentDialog(successMessage = "") {
   paymentBankList.hidden = false;
   paymentBankDetail.hidden = true;
+  paymentContinueButton.hidden = !pendingWhatsappUrl;
   const successNotice = document.querySelector("#payment-success-message");
   successNotice.textContent = successMessage;
   successNotice.hidden = !successMessage;
@@ -685,6 +688,10 @@ function openPaymentDialog(successMessage = "") {
 document.querySelector("#payment-open").addEventListener("click", openPaymentDialog);
 document.querySelector("#footer-payment-open").addEventListener("click", openPaymentDialog);
 document.querySelector("#payment-close").addEventListener("click", () => paymentDialog.close());
+paymentDialog.addEventListener("close", () => {
+  pendingWhatsappUrl = "";
+  paymentContinueButton.hidden = true;
+});
 document.querySelector("#payment-back").addEventListener("click", () => {
   paymentBankDetail.hidden = true;
   paymentBankList.hidden = false;
@@ -704,8 +711,23 @@ paymentBankList.addEventListener("click", (event) => {
   document.querySelector("#payment-id").dataset.copyValue = "V-26199919";
   renderPaymentAmount();
   paymentCopyStatus.hidden = true;
+  paymentContinueButton.hidden = !pendingWhatsappUrl;
   paymentBankList.hidden = true;
   paymentBankDetail.hidden = false;
+});
+
+paymentContinueButton.addEventListener("click", () => {
+  if (!pendingWhatsappUrl) return;
+  const newWindow = window.open(pendingWhatsappUrl, "_blank");
+  if (!newWindow) {
+    setToast("Permite las ventanas emergentes para continuar a WhatsApp.");
+    return;
+  }
+  newWindow.opener = null;
+  pendingWhatsappUrl = "";
+  paymentContinueButton.hidden = true;
+  const successNotice = document.querySelector("#payment-success-message");
+  successNotice.textContent = "WhatsApp se abrió en otra pestaña. Envía el pedido y luego vuelve aquí para copiar los datos de Pago Móvil.";
 });
 
 async function writePaymentClipboard(value) {
@@ -912,14 +934,9 @@ customerForm.addEventListener("submit", (event) => {
     return;
   }
   const message = buildWhatsAppMessage(new FormData(customerForm));
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  const newWindow = window.open(whatsappUrl, "_blank");
-  if (!newWindow) setToast("Permite las ventanas emergentes para continuar a WhatsApp.");
-  else {
-    newWindow.opener = null;
-    orderDialog.close();
-    openPaymentDialog("¡Compra exitosa! Completa el envío de tu pedido en WhatsApp y elige aquí el banco para realizar el pago.");
-  }
+  pendingWhatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  orderDialog.close();
+  openPaymentDialog("Tu pedido está listo. Elige tu banco y copia los datos y el monto; después pulsa «Continuar a WhatsApp». Cuando envíes el pedido, vuelve a esta pestaña para completar el pago.");
 });
 
 document.querySelector("#rate-refresh").addEventListener("click", loadExchangeRate);
