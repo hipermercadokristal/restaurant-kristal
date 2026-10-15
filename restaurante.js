@@ -500,10 +500,18 @@ function getPaymentAmountText(totalVES, totalItems) {
 
 function renderPaymentAmount() {
   const { totalItems, totalUSD, totalVES } = getOrderTotals();
-  document.querySelector("#payment-total-usd").textContent = totalItems ? `REF. ${formatUSD(totalUSD)}` : "Sin pedido";
-  document.querySelector("#payment-total-ves").textContent = totalItems
+  const paymentTotalUSD = document.querySelector("#payment-total-usd");
+  const paymentTotalVES = document.querySelector("#payment-total-ves");
+  paymentTotalUSD.textContent = totalItems ? `${formatUSD(totalUSD)} REF.` : "Sin pedido";
+  paymentTotalVES.textContent = totalItems
     ? totalVES === null ? "No disponible" : formatVES(totalVES)
     : "Sin pedido";
+  paymentTotalVES.disabled = totalItems === 0 || totalVES === null;
+  if (!paymentTotalVES.disabled) {
+    paymentTotalVES.dataset.copyValue = formatVES(totalVES);
+  } else {
+    delete paymentTotalVES.dataset.copyValue;
+  }
   document.querySelector("#payment-rate-note").textContent = getPaymentAmountText(totalVES, totalItems);
 }
 
@@ -788,15 +796,15 @@ paymentBankDetail.addEventListener("click", (event) => {
     const code = document.querySelector("#payment-code").dataset.copyValue;
     const phone = document.querySelector("#payment-phone").dataset.copyValue;
     const id = document.querySelector("#payment-id").dataset.copyValue;
-    const { totalItems, totalUSD, totalVES } = getOrderTotals();
+    const { totalItems, totalVES } = getOrderTotals();
     const amount = totalItems === 0
       ? "Monto del pedido: no hay productos en el carrito."
       : totalVES === null
-        ? `Monto en dólares (precio de referencia): REF. ${formatUSD(totalUSD)}\nMonto en bolívares: no disponible (tasa BCV sin conexión).`
-        : `Monto en dólares (precio de referencia): REF. ${formatUSD(totalUSD)}\nMonto en bolívares: ${formatVES(totalVES)}\nTasa aplicada: ${exchangeRateStale ? "última tasa guardada" : `BCV ${formatRateDate(exchangeRateDate)}`} · ${formatVES(exchangeRate)} por USD`;
+        ? "Monto en bolívares: no disponible (tasa BCV sin conexión)."
+        : `Monto en bolívares: ${formatVES(totalVES)}\nTasa aplicada: ${exchangeRateStale ? "última tasa guardada" : `BCV ${formatRateDate(exchangeRateDate)}`} · ${formatVES(exchangeRate)} por USD`;
     copyPaymentData(
       `Banco: ${bank}\nCódigo bancario: ${code}\nTeléfono: ${phone}\nCédula / RIF: ${id}\n${amount}`,
-      "Todos los datos y el monto",
+      "Todos los datos y el monto en bolívares",
     );
   }
 });

@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="restaurante.css?v=montos-pago-movil-2026-10" />
+    <link rel="stylesheet" href="restaurante.css?v=verde-monto-bolivares-2026-10" />
     <script src="supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
-    <script src="restaurante.js?v=montos-pago-movil-2026-10" defer></script>
+    <script src="restaurante.js?v=verde-monto-bolivares-2026-10" defer></script>
   </head>
   <body>
     <header class="restaurant-header">
@@ -195,10 +195,10 @@
                 <div><dt>Cédula / RIF</dt><dd><button class="payment-copy-field" id="payment-id" type="button" data-copy-label="Cédula / RIF">V-26199919</button></dd></div>
               </dl>
               <section class="payment-order-amount" aria-label="Monto del pedido">
-                <strong>Montos del pedido</strong>
-                <div class="payment-order-currencies">
-                  <div><small>Dólares · precio de referencia</small><span id="payment-total-usd">REF. $0.00</span></div>
-                  <div><small>Monto en bolívares</small><span id="payment-total-ves">Pendiente de tasa BCV</span></div>
+                <div class="payment-amount-display">
+                  <small>Monto en bolívares</small>
+                  <span id="payment-total-usd">$0.00 REF.</span>
+                  <button class="payment-amount-copy" id="payment-total-ves" type="button" data-copy-label="Monto en bolívares">Pendiente de tasa BCV</button>
                 </div>
                 <small id="payment-rate-note">Confirma el monto final con el restaurante antes de transferir.</small>
               </section>
