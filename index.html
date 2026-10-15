@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="restaurante.css?v=pago-movil-2026-10" />
+    <link rel="stylesheet" href="restaurante.css?v=pago-movil-logos-2026-10" />
     <script src="supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
-    <script src="restaurante.js?v=pago-movil-2026-10" defer></script>
+    <script src="restaurante.js?v=pago-movil-logos-2026-10" defer></script>
   </head>
   <body>
     <header class="restaurant-header">
@@ -163,16 +163,35 @@
               </select>
             </label>
             <label id="delivery-address-row" hidden>Dirección de entrega<input id="delivery-address" name="address" autocomplete="street-address" placeholder="Sector, calle, casa o punto de referencia" maxlength="180" /></label>
-            <label>Pago Móvil
-              <select id="payment-bank" name="payment-bank" required>
-                <option value="" selected disabled>Selecciona tu banco</option>
-                <option value="Banco de Venezuela">Banco de Venezuela</option>
-                <option value="BBVA Provincial">Provincial</option>
-                <option value="Banesco">Banesco</option>
-                <option value="Mercantil">Mercantil</option>
-              </select>
-            </label>
-            <p class="form-hint payment-hint">Solo están disponibles Banco de Venezuela, Provincial, Banesco y Mercantil. Te confirmaremos los datos vigentes de Pago Móvil por WhatsApp.</p>
+            <fieldset class="payment-method">
+              <legend>Elige tu banco para Pago Móvil</legend>
+              <div class="payment-bank-grid" role="radiogroup" aria-label="Bancos disponibles para Pago Móvil">
+                <label class="payment-bank-option bank-venezuela">
+                  <input type="radio" name="payment-bank" value="Banco de Venezuela" required />
+                  <span class="bank-card"><span class="bank-mark" aria-hidden="true">V</span><strong>Banco de<br />Venezuela</strong></span>
+                </label>
+                <label class="payment-bank-option bank-provincial">
+                  <input type="radio" name="payment-bank" value="BBVA Provincial" required />
+                  <span class="bank-card"><span class="bank-mark" aria-hidden="true">P</span><strong>Provincial</strong></span>
+                </label>
+                <label class="payment-bank-option bank-banesco">
+                  <input type="radio" name="payment-bank" value="Banesco" required />
+                  <span class="bank-card"><span class="bank-mark" aria-hidden="true">B</span><strong>Banesco</strong></span>
+                </label>
+                <label class="payment-bank-option bank-mercantil">
+                  <input type="radio" name="payment-bank" value="Mercantil" required />
+                  <span class="bank-card"><span class="bank-mark" aria-hidden="true">M</span><strong>Mercantil</strong></span>
+                </label>
+              </div>
+            </fieldset>
+            <section class="payment-details" id="payment-details" aria-live="polite" aria-atomic="true" hidden>
+              <div class="payment-details-heading"><span class="payment-check" aria-hidden="true">✓</span><span>Datos para pagar con <strong id="payment-selected-bank"></strong></span></div>
+              <dl class="payment-data">
+                <div><dt>Teléfono</dt><dd id="payment-phone">04245104430</dd></div>
+                <div><dt>Cédula / RIF</dt><dd id="payment-id">26199919</dd></div>
+              </dl>
+              <p class="payment-hint">Confirma el monto final por WhatsApp antes de transferir.</p>
+            </section>
             <label>Notas especiales <span class="optional-label">· opcional</span><textarea id="order-notes" name="notes" rows="3" placeholder="Sin cebolla, salsa extra..." maxlength="400"></textarea></label>
             <p class="form-hint">El equipo confirmará disponibilidad, total final y cobertura de delivery por WhatsApp.</p>
             <button class="whatsapp-submit" id="whatsapp-submit" type="submit">Enviar pedido por WhatsApp <span aria-hidden="true">↗</span></button>

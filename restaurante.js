@@ -19,8 +19,12 @@ const customerForm = document.querySelector("#customer-form");
 const fulfillmentMethod = document.querySelector("#fulfillment-method");
 const deliveryAddressRow = document.querySelector("#delivery-address-row");
 const deliveryAddress = document.querySelector("#delivery-address");
+const paymentDetails = document.querySelector("#payment-details");
+const paymentSelectedBank = document.querySelector("#payment-selected-bank");
 const whatsappSubmit = document.querySelector("#whatsapp-submit");
 const WHATSAPP_NUMBER = "584128867088";
+const PAYMENT_MOBILE_PHONE = "04245104430";
+const PAYMENT_MOBILE_ID = "26199919";
 const EXCHANGE_RATE_URL = "https://ve.dolarapi.com/v1/dolares/oficial";
 const CART_STORAGE_KEY = "restaurant-kristal-cart-v2";
 const RATE_STORAGE_KEY = "restaurant-kristal-bcv-rate";
@@ -650,6 +654,12 @@ function openOrderDialog() {
   orderDialog.showModal();
 }
 
+customerForm.addEventListener("change", (event) => {
+  if (event.target.name !== "payment-bank") return;
+  paymentSelectedBank.textContent = event.target.value;
+  paymentDetails.hidden = false;
+});
+
 function buildWhatsAppMessage(formData) {
   const lines = [...cart.values()].map((item, index) => {
     const option = item.portion ? ` (${item.portion})` : "";
@@ -672,6 +682,8 @@ function buildWhatsAppMessage(formData) {
     `Teléfono: ${formData.get("customer-phone")}`,
     `Entrega: ${delivery}`,
     `Pago Móvil: ${formData.get("payment-bank")}`,
+    `Teléfono Pago Móvil: ${PAYMENT_MOBILE_PHONE}`,
+    `Cédula / RIF Pago Móvil: ${PAYMENT_MOBILE_ID}`,
   ];
   if (delivery === "Delivery") values.push(`Dirección: ${formData.get("address")}`);
   const notes = String(formData.get("notes") || "").trim();
