@@ -252,10 +252,13 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .payment-copy-field { width: 100%; padding: 3px 0; border: 0; border-bottom: 1px dashed #d3c5b3; background: transparent; color: inherit; font: inherit; text-align: left; overflow-wrap: anywhere; }
 .payment-copy-field:hover { border-bottom-color: var(--red); color: var(--red-dark); }
 .payment-detail-card .payment-data { width: min(100%, 350px); }
-.payment-order-amount { display: grid; width: min(100%, 350px); justify-items: center; gap: 5px; padding: 11px; border: 1px solid #d7c7a7; border-radius: 4px; background: #f8f0e2; }
-.payment-order-amount strong { color: #695b51; font-size: 9px; }
-.payment-order-amount > span { color: var(--red-dark); font: 800 18px "Manrope", sans-serif; }
-.payment-order-amount small { color: var(--muted); font-size: 8px; line-height: 1.4; }
+.payment-order-amount { display: grid; width: min(100%, 350px); justify-items: center; gap: 8px; padding: 12px; border: 1px solid #d7c7a7; border-radius: 4px; background: #f8f0e2; }
+.payment-order-amount > strong { color: #695b51; font-size: 10px; }
+.payment-order-currencies { display: grid; width: 100%; gap: 7px; }
+.payment-order-currencies > div { display: grid; gap: 3px; padding: 8px 10px; border-radius: 3px; background: #fffdf9; }
+.payment-order-currencies > div > small { color: var(--muted); font-size: 9px; }
+.payment-order-currencies span { color: var(--red-dark); font: 800 20px "Manrope", sans-serif; }
+.payment-order-amount > small { color: var(--muted); font-size: 9px; line-height: 1.45; }
 .payment-copy-button { display: inline-flex; min-height: 42px; min-width: min(100%, 350px); align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 4px; background: var(--red); color: #fff; font-size: 10px; font-weight: 800; transition: background .18s ease, transform .18s ease; }
 .payment-copy-button::before { content: "▢"; color: #f0d38d; font-size: 15px; }
 .payment-copy-button:hover { transform: translateY(-1px); background: var(--red-dark); }

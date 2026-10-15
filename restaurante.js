@@ -489,19 +489,22 @@ function getOrderTotals() {
   return { totalItems, totalUSD, totalVES: exchangeRate === null ? null : totalUSD * exchangeRate };
 }
 
-function getPaymentAmountText(totalUSD, totalVES, totalItems) {
+function getPaymentAmountText(totalVES, totalItems) {
   if (totalItems === 0) return "Agrega productos al carrito para calcular el monto.";
-  if (totalVES === null) return "Conversión a bolívares no disponible: tasa BCV sin conexión.";
+  if (totalVES === null) return "Conversión no disponible: tasa BCV sin conexión.";
   const rateStatus = exchangeRateStale
     ? "última tasa guardada"
     : `BCV ${formatRateDate(exchangeRateDate)}`;
-  return `Equivalente: ${formatVES(totalVES)} (${rateStatus})`;
+  return `${rateStatus}: ${formatVES(exchangeRate)} por USD.`;
 }
 
 function renderPaymentAmount() {
   const { totalItems, totalUSD, totalVES } = getOrderTotals();
-  document.querySelector("#payment-total-usd").textContent = totalItems ? formatUSD(totalUSD) : "Sin pedido";
-  document.querySelector("#payment-total-ves").textContent = getPaymentAmountText(totalUSD, totalVES, totalItems);
+  document.querySelector("#payment-total-usd").textContent = totalItems ? `REF. ${formatUSD(totalUSD)}` : "Sin pedido";
+  document.querySelector("#payment-total-ves").textContent = totalItems
+    ? totalVES === null ? "No disponible" : formatVES(totalVES)
+    : "Sin pedido";
+  document.querySelector("#payment-rate-note").textContent = getPaymentAmountText(totalVES, totalItems);
 }
 
 function ensureUniqueDishPhotos(items) {
@@ -685,8 +688,8 @@ function openPaymentDialog(successMessage = "") {
   paymentDialog.showModal();
 }
 
-document.querySelector("#payment-open").addEventListener("click", openPaymentDialog);
-document.querySelector("#footer-payment-open").addEventListener("click", openPaymentDialog);
+document.querySelector("#payment-open").addEventListener("click", () => openPaymentDialog());
+document.querySelector("#footer-payment-open").addEventListener("click", () => openPaymentDialog());
 document.querySelector("#payment-close").addEventListener("click", () => paymentDialog.close());
 paymentDialog.addEventListener("close", () => {
   pendingWhatsappUrl = "";
@@ -744,9 +747,12 @@ async function writePaymentClipboard(value) {
   fallback.value = value;
   fallback.setAttribute("readonly", "");
   fallback.style.position = "fixed";
+  fallback.style.left = "-9999px";
   fallback.style.opacity = "0";
-  paymentBankDetail.append(fallback);
+  document.body.append(fallback);
+  fallback.focus();
   fallback.select();
+  fallback.setSelectionRange(0, fallback.value.length);
   const copied = document.execCommand("copy");
   fallback.remove();
   if (!copied) throw new Error("No se pudo copiar al portapapeles.");
@@ -786,8 +792,8 @@ paymentBankDetail.addEventListener("click", (event) => {
     const amount = totalItems === 0
       ? "Monto del pedido: no hay productos en el carrito."
       : totalVES === null
-        ? `Monto del pedido: ${formatUSD(totalUSD)}\nConversión a bolívares no disponible: tasa BCV sin conexión.`
-        : `Monto del pedido: ${formatUSD(totalUSD)}\nEquivalente: ${formatVES(totalVES)} (${exchangeRateStale ? "última tasa guardada" : `BCV ${formatRateDate(exchangeRateDate)}`})`;
+        ? `Monto en dólares (precio de referencia): REF. ${formatUSD(totalUSD)}\nMonto en bolívares: no disponible (tasa BCV sin conexión).`
+        : `Monto en dólares (precio de referencia): REF. ${formatUSD(totalUSD)}\nMonto en bolívares: ${formatVES(totalVES)}\nTasa aplicada: ${exchangeRateStale ? "última tasa guardada" : `BCV ${formatRateDate(exchangeRateDate)}`} · ${formatVES(exchangeRate)} por USD`;
     copyPaymentData(
       `Banco: ${bank}\nCódigo bancario: ${code}\nTeléfono: ${phone}\nCédula / RIF: ${id}\n${amount}`,
       "Todos los datos y el monto",
