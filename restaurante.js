@@ -812,8 +812,8 @@ paymentBankDetail.addEventListener("click", (event) => {
     const amount = totalItems === 0
       ? "Monto del pedido: no hay productos en el carrito."
       : totalVES === null
-        ? "Monto en bolívares: no disponible (tasa BCV sin conexión)."
-        : `Monto en bolívares: ${formatVES(totalVES)}\nTasa aplicada: ${exchangeRateStale ? "última tasa guardada" : `BCV ${formatRateDate(exchangeRateDate)}`} · ${formatVES(exchangeRate)} por USD`;
+        ? "Monto a transferir: no disponible (tasa BCV sin conexión)."
+        : `Monto a transferir: ${formatVES(totalVES)}`;
     copyPaymentData(
       `Banco: ${bank}\nCódigo bancario: ${code}\nTeléfono: ${phone}\nCédula / RIF: ${id}\n${amount}`,
       "Todos los datos y el monto en bolívares",
