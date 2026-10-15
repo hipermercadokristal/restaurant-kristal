@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="restaurante.css?v=pago-movil-copiar-2026-10" />
+    <link rel="stylesheet" href="restaurante.css?v=pago-movil-total-pedido-2026-10" />
     <script src="supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
-    <script src="restaurante.js?v=pago-movil-copiar-2026-10" defer></script>
+    <script src="restaurante.js?v=pago-movil-total-pedido-2026-10" defer></script>
   </head>
   <body>
     <header class="restaurant-header">
@@ -157,6 +157,7 @@
           <button class="dialog-close" id="payment-close" type="button" aria-label="Cerrar Pago Móvil">×</button>
         </header>
         <div class="payment-dialog-content">
+          <p class="payment-success-message" id="payment-success-message" role="status" aria-live="polite" hidden></p>
           <section id="payment-bank-list" aria-label="Bancos disponibles">
             <p class="payment-dialog-intro">Selecciona tu banco para consultar los datos de pago.</p>
             <div class="payment-bank-grid">
@@ -193,6 +194,11 @@
                 <div><dt>Teléfono</dt><dd><button class="payment-copy-field" id="payment-phone" type="button" data-copy-label="Teléfono">04245104430</button></dd></div>
                 <div><dt>Cédula / RIF</dt><dd><button class="payment-copy-field" id="payment-id" type="button" data-copy-label="Cédula / RIF">V-26199919</button></dd></div>
               </dl>
+              <section class="payment-order-amount" aria-label="Monto del pedido">
+                <strong>Monto de tu pedido</strong>
+                <span id="payment-total-usd">$0.00</span>
+                <small id="payment-total-ves">Equivalente en Bs. pendiente de tasa BCV</small>
+              </section>
               <button class="payment-copy-button" id="payment-copy" type="button">Copiar todo</button>
               <p class="payment-copy-status" id="payment-copy-status" role="status" aria-live="polite" hidden></p>
               <small>Confirma el monto final con el restaurante antes de transferir.</small>

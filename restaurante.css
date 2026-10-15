@@ -228,6 +228,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .payment-dialog-header h2 { margin: 7px 0 0; color: var(--red-dark); font: 800 25px/1.1 "Manrope", sans-serif; letter-spacing: -.6px; }
 .payment-dialog-content { overflow: auto; padding: 18px 24px 24px; overscroll-behavior: contain; }
 .payment-dialog-intro { margin: 0 0 15px; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.payment-success-message { margin: 0 0 14px; padding: 11px 13px; border: 1px solid #c9ddcb; border-radius: 4px; background: #edf6ed; color: #315d3d; font-size: 10px; font-weight: 700; line-height: 1.5; }
 .payment-bank-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .payment-bank-card { display: grid; min-width: 0; min-height: 98px; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: 1fr auto; align-items: center; gap: 7px 8px; padding: 10px; border: 1px solid var(--line); border-radius: 5px; background: #fffdf9; color: #332b27; text-align: left; transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
 .payment-bank-card:hover { transform: translateY(-2px); border-color: #d3b576; box-shadow: 0 7px 20px #37161612; }
@@ -251,6 +252,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .payment-copy-field { width: 100%; padding: 3px 0; border: 0; border-bottom: 1px dashed #d3c5b3; background: transparent; color: inherit; font: inherit; text-align: left; overflow-wrap: anywhere; }
 .payment-copy-field:hover { border-bottom-color: var(--red); color: var(--red-dark); }
 .payment-detail-card .payment-data { width: min(100%, 350px); }
+.payment-order-amount { display: grid; width: min(100%, 350px); justify-items: center; gap: 5px; padding: 11px; border: 1px solid #d7c7a7; border-radius: 4px; background: #f8f0e2; }
+.payment-order-amount strong { color: #695b51; font-size: 9px; }
+.payment-order-amount > span { color: var(--red-dark); font: 800 18px "Manrope", sans-serif; }
+.payment-order-amount small { color: var(--muted); font-size: 8px; line-height: 1.4; }
 .payment-copy-button { display: inline-flex; min-height: 42px; min-width: min(100%, 350px); align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 4px; background: var(--red); color: #fff; font-size: 10px; font-weight: 800; transition: background .18s ease, transform .18s ease; }
 .payment-copy-button::before { content: "▢"; color: #f0d38d; font-size: 15px; }
 .payment-copy-button:hover { transform: translateY(-1px); background: var(--red-dark); }

@@ -487,6 +487,21 @@ function getOrderTotals() {
   return { totalItems, totalUSD, totalVES: exchangeRate === null ? null : totalUSD * exchangeRate };
 }
 
+function getPaymentAmountText(totalUSD, totalVES, totalItems) {
+  if (totalItems === 0) return "Agrega productos al carrito para calcular el monto.";
+  if (totalVES === null) return "Conversión a bolívares no disponible: tasa BCV sin conexión.";
+  const rateStatus = exchangeRateStale
+    ? "última tasa guardada"
+    : `BCV ${formatRateDate(exchangeRateDate)}`;
+  return `Equivalente: ${formatVES(totalVES)} (${rateStatus})`;
+}
+
+function renderPaymentAmount() {
+  const { totalItems, totalUSD, totalVES } = getOrderTotals();
+  document.querySelector("#payment-total-usd").textContent = totalItems ? formatUSD(totalUSD) : "Sin pedido";
+  document.querySelector("#payment-total-ves").textContent = getPaymentAmountText(totalUSD, totalVES, totalItems);
+}
+
 function ensureUniqueDishPhotos(items) {
   const usedPhotos = new Set();
   for (const dish of items) {
@@ -521,6 +536,7 @@ function renderTotals() {
     : `${formatVES(getBuffetPrice() * exchangeRate)} · BCV`;
   whatsappSubmit.disabled = totalItems === 0;
   cartBar.classList.toggle("cart-bar-empty", totalItems === 0);
+  if (!paymentBankDetail.hidden) renderPaymentAmount();
 }
 
 function renderCartLines() {
@@ -657,9 +673,12 @@ function openOrderDialog() {
   orderDialog.showModal();
 }
 
-function openPaymentDialog() {
+function openPaymentDialog(successMessage = "") {
   paymentBankList.hidden = false;
   paymentBankDetail.hidden = true;
+  const successNotice = document.querySelector("#payment-success-message");
+  successNotice.textContent = successMessage;
+  successNotice.hidden = !successMessage;
   paymentDialog.showModal();
 }
 
@@ -683,6 +702,7 @@ paymentBankList.addEventListener("click", (event) => {
   document.querySelector("#payment-code").dataset.copyValue = bankButton.dataset.paymentCode;
   document.querySelector("#payment-phone").dataset.copyValue = "04245104430";
   document.querySelector("#payment-id").dataset.copyValue = "V-26199919";
+  renderPaymentAmount();
   paymentCopyStatus.hidden = true;
   paymentBankList.hidden = true;
   paymentBankDetail.hidden = false;
@@ -740,7 +760,16 @@ paymentBankDetail.addEventListener("click", (event) => {
     const code = document.querySelector("#payment-code").dataset.copyValue;
     const phone = document.querySelector("#payment-phone").dataset.copyValue;
     const id = document.querySelector("#payment-id").dataset.copyValue;
-    copyPaymentData(`Banco: ${bank}\nCódigo bancario: ${code}\nTeléfono: ${phone}\nCédula / RIF: ${id}`, "Todos los datos");
+    const { totalItems, totalUSD, totalVES } = getOrderTotals();
+    const amount = totalItems === 0
+      ? "Monto del pedido: no hay productos en el carrito."
+      : totalVES === null
+        ? `Monto del pedido: ${formatUSD(totalUSD)}\nConversión a bolívares no disponible: tasa BCV sin conexión.`
+        : `Monto del pedido: ${formatUSD(totalUSD)}\nEquivalente: ${formatVES(totalVES)} (${exchangeRateStale ? "última tasa guardada" : `BCV ${formatRateDate(exchangeRateDate)}`})`;
+    copyPaymentData(
+      `Banco: ${bank}\nCódigo bancario: ${code}\nTeléfono: ${phone}\nCédula / RIF: ${id}\n${amount}`,
+      "Todos los datos y el monto",
+    );
   }
 });
 
@@ -884,8 +913,13 @@ customerForm.addEventListener("submit", (event) => {
   }
   const message = buildWhatsAppMessage(new FormData(customerForm));
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  const newWindow = window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+  const newWindow = window.open(whatsappUrl, "_blank");
   if (!newWindow) setToast("Permite las ventanas emergentes para continuar a WhatsApp.");
+  else {
+    newWindow.opener = null;
+    orderDialog.close();
+    openPaymentDialog("¡Compra exitosa! Completa el envío de tu pedido en WhatsApp y elige aquí el banco para realizar el pago.");
+  }
 });
 
 document.querySelector("#rate-refresh").addEventListener("click", loadExchangeRate);
