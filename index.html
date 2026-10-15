@@ -26,9 +26,9 @@
     <main>
       <section class="restaurant-hero">
         <div class="hero-copy">
-          <span class="eyebrow">SABOR PARA COMPARTIR</span>
-          <h1>Disfruta la comida china de Kristal</h1>
-          <p>Explora el menú, elige tus favoritos y coordina tu pedido directamente con nuestro equipo.</p>
+          <span class="eyebrow">TRADICIÓN CHINA, SABOR VENEZOLANO</span>
+          <h1>Un menú para todos tus antojos</h1>
+          <p>Descubre clásicos de la comida china en Venezuela y arma tu plato de buffet a tu gusto.</p>
         </div>
         <div class="hero-art" aria-hidden="true">
           <span class="hero-stamp">KRISTAL<br />食</span>
@@ -37,9 +37,60 @@
           <span class="hero-chopsticks"></span>
         </div>
       </section>
+      <section class="buffet-section" aria-labelledby="buffet-heading">
+        <div class="buffet-intro">
+          <span class="eyebrow">TU PLATO, A TU MANERA</span>
+          <h2 id="buffet-heading">Arma tu plato de buffet</h2>
+          <p>Escoge el tamaño, una base, tus proteínas y los extras que más te provoquen.</p>
+        </div>
+        <form class="buffet-builder" id="buffet-form">
+          <fieldset class="buffet-group buffet-sizes">
+            <legend>1. Elige el tamaño</legend>
+            <div class="buffet-options">
+              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Pequeño" data-price="8.50" checked /><span><strong>Pequeño</strong><small>1 base · 1 proteína</small><b>$8.50</b></span></label>
+              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Mediano" data-price="11.50" /><span><strong>Mediano</strong><small>1 base · hasta 2 proteínas</small><b>$11.50</b></span></label>
+              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Grande" data-price="14.50" /><span><strong>Grande</strong><small>1 base · hasta 3 proteínas</small><b>$14.50</b></span></label>
+            </div>
+          </fieldset>
+          <fieldset class="buffet-group">
+            <legend>2. Elige una base</legend>
+            <div class="buffet-options buffet-tile-options">
+              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Arroz chino" required /><span>🍚 Arroz chino</span></label>
+              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Tallarines salteados" /><span>🍜 Tallarines salteados</span></label>
+              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Chop suey de vegetales" /><span>🥦 Chop suey de vegetales</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="buffet-group">
+            <legend>3. Escoge tus proteínas <small>(según el tamaño)</small></legend>
+            <div class="buffet-options buffet-tile-options">
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Pollo agridulce" /><span>🍗 Pollo agridulce</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Pollo con vegetales" /><span>🐓 Pollo con vegetales</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Carne en salsa de ostras" /><span>🥩 Carne en salsa de ostras</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Cerdo agridulce" /><span>🥢 Cerdo agridulce</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Camarones salteados" /><span>🍤 Camarones salteados</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Costillitas chinas" /><span>🍖 Costillitas chinas</span></label>
+            </div>
+            <p class="buffet-hint" id="protein-hint">Elige al menos una proteína. El tamaño pequeño incluye una.</p>
+          </fieldset>
+          <fieldset class="buffet-group">
+            <legend>4. Dale el toque final <small>(opcional)</small></legend>
+            <div class="buffet-options buffet-tile-options">
+              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Lumpias" /><span>🥟 Lumpias</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Wantones fritos" /><span>🥠 Wantones fritos</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Ensalada china" /><span>🥗 Ensalada china</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Salsa agridulce" /><span>🫙 Salsa agridulce</span></label>
+            </div>
+          </fieldset>
+          <div class="buffet-submit">
+            <p>Precio de muestra: <strong id="buffet-price">$8.50</strong><small>Precios ilustrativos para esta maqueta.</small></p>
+            <button class="buffet-add-button" type="submit">Agregar mi plato</button>
+          </div>
+          <p class="buffet-error" id="buffet-error" role="status" aria-live="polite"></p>
+        </form>
+      </section>
       <section class="menu-section" id="menu">
         <header class="menu-heading">
-          <div><span class="eyebrow">RESTAURANTE KRISTAL</span><h2>Nuestro menú</h2><p>Consulta disponibilidad y coordina tu pedido por WhatsApp.</p></div>
+          <div><span class="eyebrow">CLÁSICOS QUE NOS ENCANTAN</span><h2>Nuestro menú</h2><p>Favoritos de la cocina china al estilo venezolano.</p></div>
           <label class="search-label" for="dish-search">Buscar en el menú
             <input id="dish-search" type="search" placeholder="Ej.: arroz, pollo..." />
           </label>
@@ -55,7 +106,7 @@
     </main>
     <footer class="restaurant-footer">
       <span>Restaurante Kristal · Villa Bruzual (Turén), Estado Portuguesa</span>
-      <span>Los precios y la disponibilidad se confirman al coordinar el pedido.</span>
+      <span>Menú y precios de muestra para presentación. Disponibilidad por confirmar.</span>
     </footer>
     <div class="toast" id="restaurant-toast" role="status" aria-live="polite"></div>
   </body>
