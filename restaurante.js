@@ -671,6 +671,7 @@ function buildWhatsAppMessage(formData) {
     `Nombre: ${formData.get("customer-name")}`,
     `Teléfono: ${formData.get("customer-phone")}`,
     `Entrega: ${delivery}`,
+    `Pago Móvil: ${formData.get("payment-bank")}`,
   ];
   if (delivery === "Delivery") values.push(`Dirección: ${formData.get("address")}`);
   const notes = String(formData.get("notes") || "").trim();
