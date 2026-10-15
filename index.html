@@ -3,57 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#74251e" />
-    <meta name="description" content="Menú de comida china del Restaurante Kristal en Villa Bruzual. Haz tu pedido por WhatsApp." />
-    <title>Restaurante Kristal | Comida china</title>
+    <meta name="theme-color" content="#651c20" />
+    <meta name="description" content="Sabores de la comida china venezolana en Restaurante Kristal, Villa Bruzual. Arma tu pedido para delivery o retiro." />
+    <title>Restaurante Kristal | Sabor chino venezolano</title>
     <link rel="icon" type="image/png" href="assets/kristal-favicon.png" />
-    <link rel="stylesheet" href="restaurante.css?v=food-photos" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="restaurante.css?v=orden-completo-2026-10" />
     <script src="supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
-    <script src="restaurante.js?v=unique-menu-images" defer></script>
+    <script src="restaurante.js?v=orden-completo-2026-10" defer></script>
   </head>
   <body>
     <header class="restaurant-header">
       <a class="restaurant-brand" href="./" aria-label="Restaurante Kristal, inicio">
         <img src="assets/kristal-logo.png" alt="" />
-        <span><strong>Restaurante Kristal</strong><small>Comida china en Villa Bruzual</small></span>
+        <span><strong>Restaurante Kristal</strong><small>Comida china · Villa Bruzual</small></span>
       </a>
-      <nav aria-label="Navegación principal">
+      <nav class="header-actions" aria-label="Navegación principal">
+        <a class="header-menu-link" href="#menu">La carta</a>
         <a class="admin-link" href="admin/">Administración</a>
+        <div class="rate-chip" aria-live="polite">
+          <span class="rate-dot" aria-hidden="true"></span>
+          <span id="exchange-rate">Consultando BCV…</span>
+          <button class="rate-refresh" id="rate-refresh" type="button" aria-label="Actualizar tasa BCV" title="Actualizar tasa">↻</button>
+        </div>
       </nav>
     </header>
     <main>
       <section class="restaurant-hero">
+        <div class="hero-shade"></div>
         <div class="hero-copy">
-          <span class="eyebrow">TRADICIÓN CHINA, SABOR VENEZOLANO</span>
-          <h1>Un menú para todos tus antojos</h1>
-          <p>Descubre clásicos de la comida china en Venezuela y arma tu plato de buffet a tu gusto.</p>
+          <span class="eyebrow"><span class="eyebrow-line"></span>TRADICIÓN CHINA, CORAZÓN VENEZOLANO</span>
+          <h1>El sabor que<br /><em>nos reúne.</em></h1>
+          <p>Arroz recién salteado, platos para compartir y ese toque criollo que sabe a casa.</p>
+          <a class="hero-cta" href="#menu">Explorar la carta <span aria-hidden="true">↓</span></a>
+          <div class="hero-note"><span aria-hidden="true">✳</span> Preparado al momento en Villa Bruzual</div>
         </div>
-        <div class="hero-art" aria-hidden="true">
-          <span class="hero-stamp">KRISTAL<br />食</span>
-          <span class="hero-orbit hero-orbit-one"></span>
-          <span class="hero-orbit hero-orbit-two"></span>
-          <span class="hero-chopsticks"></span>
+        <div class="hero-seal" aria-label="Restaurante Kristal">
+          <span class="seal-top">RESTAURANTE</span>
+          <span class="seal-mark">食</span>
+          <span class="seal-bottom">KRISTAL · DESDE SIEMPRE</span>
         </div>
+      </section>
+      <section class="trust-strip" aria-label="Información del restaurante">
+        <span><b>01</b> Sabor chino venezolano</span>
+        <span><b>02</b> Pide por WhatsApp</span>
+        <span><b>03</b> Delivery o retiro</span>
+        <span class="strip-location">Villa Bruzual · Portuguesa</span>
       </section>
       <section class="buffet-section" aria-labelledby="buffet-heading">
         <div class="buffet-intro">
-          <span class="eyebrow">TU PLATO, A TU MANERA</span>
-          <h2 id="buffet-heading">Arma tu plato de buffet</h2>
-          <p>Escoge el tamaño, una base, tus proteínas y los extras que más te provoquen.</p>
+          <span class="eyebrow"><span class="eyebrow-line"></span>HECHO A TU GUSTO</span>
+          <h2 id="buffet-heading">Arma tu plato.</h2>
+          <p>Una base, tus proteínas favoritas y algo rico para acompañar. Tú eliges la combinación.</p>
+          <div class="buffet-mark" aria-hidden="true">KRISTAL <span>✳</span> BUFFET</div>
         </div>
         <form class="buffet-builder" id="buffet-form">
           <fieldset class="buffet-group buffet-sizes">
-            <legend>1. Elige el tamaño</legend>
+            <legend>Elige el tamaño</legend>
             <div class="buffet-options">
-              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Pequeño" data-price="8.50" checked /><span><strong>Pequeño</strong><small>1 base · 1 proteína</small><b>$8.50</b></span></label>
-              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Mediano" data-price="11.50" /><span><strong>Mediano</strong><small>1 base · hasta 2 proteínas</small><b>$11.50</b></span></label>
-              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Grande" data-price="14.50" /><span><strong>Grande</strong><small>1 base · hasta 3 proteínas</small><b>$14.50</b></span></label>
+              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Pequeño" data-price="8.50" checked /><span><strong>Pequeño</strong><small>1 base · 1 proteína</small><b data-buffet-price="8.50">$8.50</b></span></label>
+              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Mediano" data-price="11.50" /><span><strong>Mediano</strong><small>1 base · hasta 2 proteínas</small><b data-buffet-price="11.50">$11.50</b></span></label>
+              <label class="buffet-choice"><input type="radio" name="buffet-size" value="Grande" data-price="14.50" /><span><strong>Grande</strong><small>1 base · hasta 3 proteínas</small><b data-buffet-price="14.50">$14.50</b></span></label>
             </div>
           </fieldset>
           <fieldset class="buffet-group">
-            <legend>2. Elige una base</legend>
+            <legend>Escoge una base</legend>
             <div class="buffet-options buffet-tile-options">
               <label class="buffet-tile"><input type="radio" name="buffet-base" value="Arroz chino" required /><span>Arroz chino</span></label>
               <label class="buffet-tile"><input type="radio" name="buffet-base" value="Tallarines salteados" /><span>Tallarines salteados</span></label>
@@ -61,7 +79,7 @@
             </div>
           </fieldset>
           <fieldset class="buffet-group">
-            <legend>3. Escoge tus proteínas <small>(según el tamaño)</small></legend>
+            <legend>Elige tus proteínas <small id="protein-hint">· hasta 1</small></legend>
             <div class="buffet-options buffet-tile-options">
               <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Pollo agridulce" /><span>Pollo agridulce</span></label>
               <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Pollo con vegetales" /><span>Pollo con vegetales</span></label>
@@ -70,10 +88,9 @@
               <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Camarones salteados" /><span>Camarones salteados</span></label>
               <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Costillitas chinas" /><span>Costillitas chinas</span></label>
             </div>
-            <p class="buffet-hint" id="protein-hint">Elige al menos una proteína. El tamaño pequeño incluye una.</p>
           </fieldset>
           <fieldset class="buffet-group">
-            <legend>4. Dale el toque final <small>(opcional)</small></legend>
+            <legend>Un toque extra <small>· opcional</small></legend>
             <div class="buffet-options buffet-tile-options">
               <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Lumpias" /><span>Lumpias</span></label>
               <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Wantones fritos" /><span>Wantones fritos</span></label>
@@ -82,32 +99,73 @@
             </div>
           </fieldset>
           <div class="buffet-submit">
-            <p>Precio del plato: <strong id="buffet-price">$8.50</strong><small>El precio depende del tamaño elegido.</small></p>
-            <button class="buffet-add-button" type="submit">Agregar mi plato</button>
+            <p>Tu plato desde <strong id="buffet-price">$8.50</strong><small class="buffet-ves" id="buffet-price-ves"></small></p>
+            <button class="buffet-add-button" type="submit">Agregar al pedido <span aria-hidden="true">+</span></button>
           </div>
           <p class="buffet-error" id="buffet-error" role="status" aria-live="polite"></p>
         </form>
       </section>
       <section class="menu-section" id="menu">
         <header class="menu-heading">
-          <div><span class="eyebrow">CLÁSICOS QUE NOS ENCANTAN</span><h2>Nuestro menú</h2><p>Favoritos de la cocina china al estilo venezolano.</p></div>
-          <label class="search-label" for="dish-search">Buscar en el menú
-            <input id="dish-search" type="search" placeholder="Ej.: arroz, pollo..." />
+          <div class="menu-heading-copy">
+            <span class="eyebrow"><span class="eyebrow-line"></span>RECIÉN SALIDO DEL WOK</span>
+            <h2>La carta</h2>
+            <p>Clásicos criollos, combos para compartir y antojos para cualquier día. Precios referenciales en USD con equivalente diario en Bs. a tasa BCV.</p>
+          </div>
+          <label class="search-label" for="dish-search">
+            <span>¿Qué se te antoja?</span>
+            <span class="search-wrap"><span aria-hidden="true">⌕</span><input id="dish-search" type="search" placeholder="Busca un plato..." /></span>
           </label>
         </header>
         <nav class="category-filter" id="category-filter" aria-label="Filtrar por categoría"></nav>
-        <p class="catalog-status" id="catalog-status" role="status" aria-live="polite">Cargando el menú…</p>
+        <p class="catalog-status" id="catalog-status" role="status" aria-live="polite">Cargando la carta…</p>
         <div class="dish-grid" id="dish-grid" aria-live="polite"></div>
       </section>
-      <section class="order-banner">
-        <div><span class="eyebrow">¿LISTO PARA PEDIR?</span><h2>Tu pedido, directo por WhatsApp</h2><p>El equipo confirmará disponibilidad, precio final y forma de entrega.</p></div>
-        <button id="order-button" type="button" disabled>Preparar pedido <span id="order-count">0</span></button>
+      <section class="order-callout">
+        <span class="callout-ornament" aria-hidden="true">食</span>
+        <div><span class="eyebrow">EL PRÓXIMO ANTOJO VA POR NUESTRA CUENTA</span><h2>Lo bueno se comparte.</h2><p>Arma tu pedido y nosotros nos encargamos del sabor.</p></div>
+        <a href="#menu">Elegir mis platos <span aria-hidden="true">→</span></a>
       </section>
     </main>
     <footer class="restaurant-footer">
-      <span>Restaurante Kristal · Villa Bruzual (Turén), Estado Portuguesa</span>
-      <span>Fotografías referenciales. Precios y disponibilidad sujetos a confirmación por WhatsApp.</span>
+      <a class="footer-brand" href="./"><img src="assets/kristal-logo.png" alt="" /><strong>Restaurante Kristal</strong></a>
+      <span>Villa Bruzual (Turén), Estado Portuguesa</span>
+      <span>Fotografías referenciales. Confirma precios y disponibilidad al ordenar.</span>
+      <a href="admin/">Administración</a>
     </footer>
+    <aside class="cart-bar" id="cart-bar" aria-label="Resumen de tu carrito">
+      <div class="cart-bar-info"><span class="cart-bag" aria-hidden="true">▣</span><span><strong id="order-count">0</strong> productos</span><span class="cart-bar-divider"></span><span class="cart-subtotal-label">Subtotal</span><span class="cart-totals"><strong id="cart-total-usd">$0.00</strong><small id="cart-total-ves">Tasa BCV pendiente</small></span></div>
+      <button class="cart-open-button" id="order-button" type="button" disabled>Ver pedido <span aria-hidden="true">→</span></button>
+    </aside>
+    <dialog class="order-dialog" id="order-dialog" aria-labelledby="order-heading">
+      <div class="dialog-panel">
+        <header class="dialog-header">
+          <div><span class="eyebrow"><span class="eyebrow-line"></span>CASI LISTO</span><h2 id="order-heading">Tu pedido</h2></div>
+          <button class="dialog-close" id="order-close" type="button" aria-label="Cerrar resumen">×</button>
+        </header>
+        <div class="dialog-scroll">
+          <section class="order-lines" id="order-lines" aria-label="Productos seleccionados"></section>
+          <section class="order-total" aria-live="polite"><span>Subtotal estimado</span><strong id="dialog-total-usd">$0.00</strong><small id="dialog-total-ves">Tasa BCV pendiente</small></section>
+          <form class="customer-form" id="customer-form">
+            <h3>¿A nombre de quién?</h3>
+            <div class="customer-fields">
+              <label>Nombre<input name="customer-name" autocomplete="name" placeholder="Tu nombre" required maxlength="80" /></label>
+              <label>Teléfono<input name="customer-phone" type="tel" autocomplete="tel" placeholder="Ej. 0412 123 4567" required minlength="7" maxlength="25" /></label>
+            </div>
+            <label>Método de entrega
+              <select id="fulfillment-method" name="fulfillment" required>
+                <option value="Retiro en el local">Retiro en el local</option>
+                <option value="Delivery">Delivery</option>
+              </select>
+            </label>
+            <label id="delivery-address-row" hidden>Dirección de entrega<input id="delivery-address" name="address" autocomplete="street-address" placeholder="Sector, calle, casa o punto de referencia" maxlength="180" /></label>
+            <label>Notas especiales <span class="optional-label">· opcional</span><textarea id="order-notes" name="notes" rows="3" placeholder="Sin cebolla, salsa extra..." maxlength="400"></textarea></label>
+            <p class="form-hint">El equipo confirmará disponibilidad, total final y cobertura de delivery por WhatsApp.</p>
+            <button class="whatsapp-submit" id="whatsapp-submit" type="submit">Enviar pedido por WhatsApp <span aria-hidden="true">↗</span></button>
+          </form>
+        </div>
+      </div>
+    </dialog>
     <div class="toast" id="restaurant-toast" role="status" aria-live="polite"></div>
   </body>
 </html>

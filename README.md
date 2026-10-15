@@ -9,4 +9,6 @@ Sitio independiente del restaurante de comida china de Hipermercado Kristal. La 
 3. Publica este repositorio con GitHub Pages. El workflow de `.github/workflows/pages.yml` despliega la raíz del repositorio.
 4. El menú estará en la raíz del sitio y el panel privado en `/admin/`. Usa el usuario administrador existente de Supabase.
 
-La carta combina productos publicados desde Supabase con un menú editorial de presentación. Cada plato editorial usa una fotografía local distinta. Antes de usarla comercialmente, verifica que los platos, precios y opciones de buffet correspondan a la oferta real. Las fotografías son referenciales (Unsplash y Pexels), no fotografías tomadas en el restaurante.
+La carta combina productos publicados desde Supabase con un menú editorial de presentación y opciones de ración para platos seleccionados. El carrito se guarda en el dispositivo; para enviar un pedido hay que completar el resumen con los datos del cliente y la entrega. La tasa oficial BCV se consulta en `ve.dolarapi.com` al abrir la página y cada hora, se muestra con su fecha de actualización y se incluye en los subtotales en bolívares. Si la consulta falla, la página identifica cualquier tasa local como desactualizada y no oculta que el equivalente en bolívares no está confirmado.
+
+Los precios editoriales y las opciones de buffet son referenciales hasta confirmar la oferta real del restaurante. Cada producto editorial utiliza una fotografía local diferente. Las fotografías son referenciales (Unsplash y Pexels), no fotografías tomadas en el restaurante.
