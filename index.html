@@ -10,11 +10,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="restaurante.css?v=pago-movil-modal-2026-10" />
+    <link rel="stylesheet" href="restaurante.css?v=pago-movil-copiar-2026-10" />
     <script src="supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
-    <script src="restaurante.js?v=pago-movil-modal-2026-10" defer></script>
+    <script src="restaurante.js?v=pago-movil-copiar-2026-10" defer></script>
   </head>
   <body>
     <header class="restaurant-header">
@@ -160,20 +160,24 @@
           <section id="payment-bank-list" aria-label="Bancos disponibles">
             <p class="payment-dialog-intro">Selecciona tu banco para consultar los datos de pago.</p>
             <div class="payment-bank-grid">
-              <button class="payment-bank-card bank-venezuela" type="button" data-payment-bank="Banco de Venezuela" aria-label="Banco de Venezuela">
-                <span class="payment-bank-logo" aria-hidden="true"><span class="bank-mark">V</span><strong>Banco de<br />Venezuela</strong></span>
+              <button class="payment-bank-card bank-venezuela" type="button" data-payment-bank="Banco de Venezuela" data-payment-code="0102" data-payment-logo="assets/payment-banks/banco-de-venezuela.png" aria-label="Banco de Venezuela, código 0102">
+                <span class="payment-bank-logo"><img src="assets/payment-banks/banco-de-venezuela.png" alt="" /><strong>Banco de Venezuela</strong></span>
+                <span class="payment-bank-code">0102</span>
                 <span class="bank-card-arrow" aria-hidden="true">→</span>
               </button>
-              <button class="payment-bank-card bank-provincial" type="button" data-payment-bank="BBVA Provincial" aria-label="BBVA Provincial">
-                <span class="payment-bank-logo" aria-hidden="true"><span class="bank-mark">BBVA</span><strong>Provincial</strong></span>
+              <button class="payment-bank-card bank-provincial" type="button" data-payment-bank="BBVA Provincial" data-payment-code="0108" data-payment-logo="assets/payment-banks/provincial.png" aria-label="BBVA Provincial, código 0108">
+                <span class="payment-bank-logo"><img src="assets/payment-banks/provincial.png" alt="" /><strong>Provincial</strong></span>
+                <span class="payment-bank-code">0108</span>
                 <span class="bank-card-arrow" aria-hidden="true">→</span>
               </button>
-              <button class="payment-bank-card bank-banesco" type="button" data-payment-bank="Banesco" aria-label="Banesco">
-                <span class="payment-bank-logo" aria-hidden="true"><span class="bank-mark">B</span><strong>Banesco</strong></span>
+              <button class="payment-bank-card bank-banesco" type="button" data-payment-bank="Banesco" data-payment-code="0134" data-payment-logo="assets/payment-banks/banesco.png" aria-label="Banesco, código 0134">
+                <span class="payment-bank-logo"><img src="assets/payment-banks/banesco.png" alt="" /><strong>Banesco</strong></span>
+                <span class="payment-bank-code">0134</span>
                 <span class="bank-card-arrow" aria-hidden="true">→</span>
               </button>
-              <button class="payment-bank-card bank-mercantil" type="button" data-payment-bank="Mercantil" aria-label="Mercantil">
-                <span class="payment-bank-logo" aria-hidden="true"><span class="bank-mark">M</span><strong>Mercantil</strong></span>
+              <button class="payment-bank-card bank-mercantil" type="button" data-payment-bank="Mercantil" data-payment-code="0105" data-payment-logo="assets/payment-banks/mercantil.png" aria-label="Mercantil, código 0105">
+                <span class="payment-bank-logo"><img src="assets/payment-banks/mercantil.png" alt="" /><strong>Mercantil</strong></span>
+                <span class="payment-bank-code">0105</span>
                 <span class="bank-card-arrow" aria-hidden="true">→</span>
               </button>
             </div>
@@ -181,13 +185,16 @@
           <section class="payment-bank-detail" id="payment-bank-detail" aria-live="polite" hidden>
             <button class="payment-back-button" id="payment-back" type="button"><span aria-hidden="true">←</span> Volver a los bancos</button>
             <div class="payment-detail-card">
-              <span class="payment-detail-brand" id="payment-detail-brand"></span>
+              <span class="payment-detail-brand"><img id="payment-detail-logo" src="assets/payment-banks/banco-de-venezuela.png" alt="" /></span>
               <h3 id="payment-detail-bank"></h3>
               <p>Datos para realizar tu Pago Móvil</p>
               <dl class="payment-data">
-                <div><dt>Teléfono</dt><dd id="payment-phone">04245104430</dd></div>
-                <div><dt>Cédula / RIF</dt><dd id="payment-id">26199919</dd></div>
+                <div><dt>Código del banco</dt><dd><button class="payment-copy-field" id="payment-code" type="button" data-copy-label="Código bancario">0102</button></dd></div>
+                <div><dt>Teléfono</dt><dd><button class="payment-copy-field" id="payment-phone" type="button" data-copy-label="Teléfono">04245104430</button></dd></div>
+                <div><dt>Cédula / RIF</dt><dd><button class="payment-copy-field" id="payment-id" type="button" data-copy-label="Cédula / RIF">V-26199919</button></dd></div>
               </dl>
+              <button class="payment-copy-button" id="payment-copy" type="button">Copiar todo</button>
+              <p class="payment-copy-status" id="payment-copy-status" role="status" aria-live="polite" hidden></p>
               <small>Confirma el monto final con el restaurante antes de transferir.</small>
             </div>
           </section>

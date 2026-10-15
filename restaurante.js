@@ -17,8 +17,9 @@ const orderDialog = document.querySelector("#order-dialog");
 const paymentDialog = document.querySelector("#payment-dialog");
 const paymentBankList = document.querySelector("#payment-bank-list");
 const paymentBankDetail = document.querySelector("#payment-bank-detail");
-const paymentDetailBrand = document.querySelector("#payment-detail-brand");
 const paymentDetailBank = document.querySelector("#payment-detail-bank");
+const paymentDetailLogo = document.querySelector("#payment-detail-logo");
+const paymentCopyStatus = document.querySelector("#payment-copy-status");
 const orderLines = document.querySelector("#order-lines");
 const customerForm = document.querySelector("#customer-form");
 const fulfillmentMethod = document.querySelector("#fulfillment-method");
@@ -29,6 +30,7 @@ const WHATSAPP_NUMBER = "584128867088";
 const EXCHANGE_RATE_URL = "https://ve.dolarapi.com/v1/dolares/oficial";
 const CART_STORAGE_KEY = "restaurant-kristal-cart-v2";
 const RATE_STORAGE_KEY = "restaurant-kristal-bcv-rate";
+let paymentCopyTimeout;
 const usdNumber = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const vesNumber = new Intl.NumberFormat("es-VE", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const menuCategories = [
@@ -674,11 +676,72 @@ paymentDialog.addEventListener("click", (event) => {
 paymentBankList.addEventListener("click", (event) => {
   const bankButton = event.target.closest("[data-payment-bank]");
   if (!bankButton) return;
-  const bankMark = bankButton.querySelector(".bank-mark").cloneNode(true);
-  paymentDetailBrand.replaceChildren(bankMark);
+  paymentDetailLogo.src = bankButton.dataset.paymentLogo;
+  paymentDetailLogo.alt = `Logo de ${bankButton.dataset.paymentBank}`;
   paymentDetailBank.textContent = bankButton.dataset.paymentBank;
+  document.querySelector("#payment-code").textContent = bankButton.dataset.paymentCode;
+  document.querySelector("#payment-code").dataset.copyValue = bankButton.dataset.paymentCode;
+  document.querySelector("#payment-phone").dataset.copyValue = "04245104430";
+  document.querySelector("#payment-id").dataset.copyValue = "V-26199919";
+  paymentCopyStatus.hidden = true;
   paymentBankList.hidden = true;
   paymentBankDetail.hidden = false;
+});
+
+async function writePaymentClipboard(value) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(value);
+      return;
+    } catch {
+      // Use the selection-based fallback when clipboard permissions are unavailable.
+    }
+  }
+
+  const fallback = document.createElement("textarea");
+  fallback.value = value;
+  fallback.setAttribute("readonly", "");
+  fallback.style.position = "fixed";
+  fallback.style.opacity = "0";
+  paymentBankDetail.append(fallback);
+  fallback.select();
+  const copied = document.execCommand("copy");
+  fallback.remove();
+  if (!copied) throw new Error("No se pudo copiar al portapapeles.");
+}
+
+async function copyPaymentData(value, label) {
+  try {
+    await writePaymentClipboard(value);
+    paymentCopyStatus.textContent = `¡Copiado! ${label}`;
+    paymentCopyStatus.hidden = false;
+    clearTimeout(paymentCopyTimeout);
+    paymentCopyTimeout = setTimeout(() => {
+      paymentCopyStatus.hidden = true;
+    }, 1800);
+  } catch {
+    paymentCopyStatus.textContent = "No se pudo copiar. Mantén pulsado el dato para copiarlo.";
+    paymentCopyStatus.hidden = false;
+    clearTimeout(paymentCopyTimeout);
+    paymentCopyTimeout = setTimeout(() => {
+      paymentCopyStatus.hidden = true;
+    }, 3000);
+  }
+}
+
+paymentBankDetail.addEventListener("click", (event) => {
+  const field = event.target.closest("[data-copy-value]");
+  if (field) {
+    copyPaymentData(field.dataset.copyValue, field.dataset.copyLabel);
+    return;
+  }
+  if (event.target.closest("#payment-copy")) {
+    const bank = paymentDetailBank.textContent;
+    const code = document.querySelector("#payment-code").dataset.copyValue;
+    const phone = document.querySelector("#payment-phone").dataset.copyValue;
+    const id = document.querySelector("#payment-id").dataset.copyValue;
+    copyPaymentData(`Banco: ${bank}\nCódigo bancario: ${code}\nTeléfono: ${phone}\nCédula / RIF: ${id}`, "Todos los datos");
+  }
 });
 
 function buildWhatsAppMessage(formData) {
