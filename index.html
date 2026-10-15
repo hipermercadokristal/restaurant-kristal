@@ -7,11 +7,11 @@
     <meta name="description" content="Menú de comida china del Restaurante Kristal en Villa Bruzual. Haz tu pedido por WhatsApp." />
     <title>Restaurante Kristal | Comida china</title>
     <link rel="icon" type="image/png" href="assets/kristal-favicon.png" />
-    <link rel="stylesheet" href="restaurante.css" />
+    <link rel="stylesheet" href="restaurante.css?v=food-photos" />
     <script src="supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="supabase-client.js"></script>
-    <script src="restaurante.js" defer></script>
+    <script src="restaurante.js?v=unique-menu-images" defer></script>
   </head>
   <body>
     <header class="restaurant-header">
@@ -55,34 +55,34 @@
           <fieldset class="buffet-group">
             <legend>2. Elige una base</legend>
             <div class="buffet-options buffet-tile-options">
-              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Arroz chino" required /><span>🍚 Arroz chino</span></label>
-              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Tallarines salteados" /><span>🍜 Tallarines salteados</span></label>
-              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Chop suey de vegetales" /><span>🥦 Chop suey de vegetales</span></label>
+              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Arroz chino" required /><span>Arroz chino</span></label>
+              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Tallarines salteados" /><span>Tallarines salteados</span></label>
+              <label class="buffet-tile"><input type="radio" name="buffet-base" value="Chop suey de vegetales" /><span>Chop suey de vegetales</span></label>
             </div>
           </fieldset>
           <fieldset class="buffet-group">
             <legend>3. Escoge tus proteínas <small>(según el tamaño)</small></legend>
             <div class="buffet-options buffet-tile-options">
-              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Pollo agridulce" /><span>🍗 Pollo agridulce</span></label>
-              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Pollo con vegetales" /><span>🐓 Pollo con vegetales</span></label>
-              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Carne en salsa de ostras" /><span>🥩 Carne en salsa de ostras</span></label>
-              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Cerdo agridulce" /><span>🥢 Cerdo agridulce</span></label>
-              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Camarones salteados" /><span>🍤 Camarones salteados</span></label>
-              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Costillitas chinas" /><span>🍖 Costillitas chinas</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Pollo agridulce" /><span>Pollo agridulce</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Pollo con vegetales" /><span>Pollo con vegetales</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Carne en salsa de ostras" /><span>Carne en salsa de ostras</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Cerdo agridulce" /><span>Cerdo agridulce</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Camarones salteados" /><span>Camarones salteados</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-protein" value="Costillitas chinas" /><span>Costillitas chinas</span></label>
             </div>
             <p class="buffet-hint" id="protein-hint">Elige al menos una proteína. El tamaño pequeño incluye una.</p>
           </fieldset>
           <fieldset class="buffet-group">
             <legend>4. Dale el toque final <small>(opcional)</small></legend>
             <div class="buffet-options buffet-tile-options">
-              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Lumpias" /><span>🥟 Lumpias</span></label>
-              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Wantones fritos" /><span>🥠 Wantones fritos</span></label>
-              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Ensalada china" /><span>🥗 Ensalada china</span></label>
-              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Salsa agridulce" /><span>🫙 Salsa agridulce</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Lumpias" /><span>Lumpias</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Wantones fritos" /><span>Wantones fritos</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Ensalada china" /><span>Ensalada china</span></label>
+              <label class="buffet-tile"><input type="checkbox" name="buffet-extra" value="Salsa agridulce" /><span>Salsa agridulce</span></label>
             </div>
           </fieldset>
           <div class="buffet-submit">
-            <p>Precio de muestra: <strong id="buffet-price">$8.50</strong><small>Precios ilustrativos para esta maqueta.</small></p>
+            <p>Precio del plato: <strong id="buffet-price">$8.50</strong><small>El precio depende del tamaño elegido.</small></p>
             <button class="buffet-add-button" type="submit">Agregar mi plato</button>
           </div>
           <p class="buffet-error" id="buffet-error" role="status" aria-live="polite"></p>
@@ -106,7 +106,7 @@
     </main>
     <footer class="restaurant-footer">
       <span>Restaurante Kristal · Villa Bruzual (Turén), Estado Portuguesa</span>
-      <span>Menú y precios de muestra para presentación. Disponibilidad por confirmar.</span>
+      <span>Fotografías referenciales. Precios y disponibilidad sujetos a confirmación por WhatsApp.</span>
     </footer>
     <div class="toast" id="restaurant-toast" role="status" aria-live="polite"></div>
   </body>

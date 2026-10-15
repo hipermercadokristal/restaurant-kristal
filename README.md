@@ -9,4 +9,4 @@ Sitio independiente del restaurante de comida china de Hipermercado Kristal. La 
 3. Publica este repositorio con GitHub Pages. El workflow de `.github/workflows/pages.yml` despliega la raíz del repositorio.
 4. El menú estará en la raíz del sitio y el panel privado en `/admin/`. Usa el usuario administrador existente de Supabase.
 
-La carta incluye platos y precios ficticios marcados como “MUESTRA” para presentar una propuesta, además de los productos publicados desde Supabase. El configurador de buffet y sus precios también son ilustrativos; ajústalos antes de usar la página como menú comercial.
+La carta combina productos publicados desde Supabase con un menú editorial de presentación. Cada plato editorial usa una fotografía local distinta. Antes de usarla comercialmente, verifica que los platos, precios y opciones de buffet correspondan a la oferta real. Las fotografías son referenciales (Unsplash y Pexels), no fotografías tomadas en el restaurante.

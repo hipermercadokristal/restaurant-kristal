@@ -63,7 +63,6 @@ button { cursor: pointer; }
 .buffet-submit p small { font-size: 9px; }
 .buffet-add-button { min-height: 43px; padding: 0 16px; border: 0; border-radius: 7px; background: var(--wine); color: white; font-size: 11px; font-weight: 800; }
 .buffet-error { min-height: 0; margin: -14px 0 0; color: #a3271d; font-size: 11px; }
-.dish-art { display: grid; width: 100%; aspect-ratio: 1.62; place-items: center; background: radial-gradient(circle at 50% 45%, #fff3cf, #f1d4a4 60%, #dfad51); font-size: 70px; }
 .menu-section { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 60px 0 72px; }
 .menu-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
 .menu-heading h2, .order-banner h2 { margin: 8px 0; color: var(--wine-dark); font: 800 clamp(25px, 4vw, 34px)/1.2 "Manrope", Arial, sans-serif; }
@@ -122,7 +121,6 @@ button { cursor: pointer; }
   .dish-grid { grid-template-columns: 1fr; }
   .dish-card { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
   .dish-card img { height: 100%; min-height: 150px; aspect-ratio: auto; }
-  .dish-art { height: 100%; min-height: 150px; aspect-ratio: auto; font-size: 54px; }
   .dish-card p { min-height: 0; }
   .dish-card-bottom { flex-direction: row; align-items: center; }
   .dish-card-bottom button { width: auto; }
